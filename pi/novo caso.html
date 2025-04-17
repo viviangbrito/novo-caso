@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="css/img/image.png">
+  <title>IDentify</title>
+  <link rel="stylesheet" href="css/novo caso.css">
+  <!-- Apenas essas linhas no HTML, se ainda não tiver no projeto -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+
+
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo-container">
+    <img src="css/img/logo.png" class="logo">
+  </div>
+  
+  <!-- Menu lateral -->
+  <div class="menu-lateral">
+    <a href="#"><img src="css/img/home.png" class="icone" alt="Início">Início</a>
+    <a href="#"><img src="css/img/file.png" class="icone" alt="Caso Novo">Caso Novo</a>
+    <a href="#"><img src="css/img/folder.png" class="icone" alt="Projetos">Casos</a>
+  </div>
+
+<!-- Retângulo de fundo -->
+<div class="retangulo-fundo">
+    <div class="ficha-caso">
+      <div class="cabecalho">
+        <div class="campo">
+          <label for="titulo">Título:</label>
+          <input type="text" id="titulo" placeholder="Caso 1" required>
+        </div>
+        <div class="campo">
+          <label for="codigo">Código:</label>
+          <input type="text" id="codigo" placeholder="26783651" required>
+        </div>
+        <div class="campo">
+          <label for="perito">Perito:</label>
+          <input type="text" id="perito" placeholder="José" required>
+        </div>
+        <div class="campo">
+          <label for="status">Status:</label>
+          <input type="text" id="status" placeholder="Em andamento ou concluído" required>
+        </div>
+        <div class="campo">
+          <label for="data-ocorrencia">Data de ocorrência:</label>
+          <input type="text" id="data-ocorrencia" placeholder="20/02/2025" required>
+        </div>
+        <div class="campo">
+          <label for="data-emissao">Data de emissão:</label>
+          <input type="text" id="data-emissao" placeholder="20/02/2025" required>
+        </div>
+        <div class="campo">
+          <label for="local">Local:</label>
+          <input type="text" id="local" placeholder="Digite o local" required>
+        </div>
+      </div>
+    
+      <div class="descricao">
+        <textarea id="descricao" placeholder="Descrição completa" rows="20" style="width: 100%; resize: vertical;" required></textarea>
+      </div>
+      <button id="btn-salvar-caso" class="salvar">Salvar Dados do Caso</button></div>
+   
+
+      <div class="bloco-anexos">
+        <div class="botoes-topo">
+          <button class="botao-icone" id="btn-localizacao">
+            <img src="css/img/Pin.png" alt="Localização">
+            <span>Localização</span>
+          </button>
+        
+          <button class="botao-icone" id="btn-anexos">
+            <img src="css/img/Vector.png" alt="Anexos">
+            <span>Anexos</span>
+          </button>
+        
+          <button class="botao-icone" id="btn-relatorio">
+            <img src="css/img/Report.png" alt="Relatório">
+            <span>Relatório</span>
+          </button>
+        </div>
+    
+        
+        <div class="conteudo-tabs">
+          <div id="localizacao" class="conteudo-tab">
+            <div id="map"></div>
+            <div id="info">
+              <strong>Endereço:</strong> <span id="endereco">Clique no mapa para buscar</span>
+            </div>            
+          </div>
+
+          <div id="anexos" class="conteudo-tab">
+            <div id="mensagem" style="display:none; margin-top: 10px;"></div>
+          
+            <div class="menu-dropdown">
+              <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                <div class="custom-dropdown" id="dropdown">
+                  <button class="dropdown-btn" onclick="toggleDropdown()">
+                    Evidências Selecionadas<span class="seta">&#9662;</span>
+                  </button>
+                  <div class="dropdown-content" id="lista-evidencias">
+                    <!-- Itens adicionados vão aparecer aqui -->
+                  </div>
+                </div>
+          
+                <input type="file" id="inputEvidencia" style="display: none;">
+                <button class="adicionar" onclick="document.getElementById('inputEvidencia').click()">+ Evidência</button>
+              </div>
+            </div>
+          
+            <div class="tabela-evidencias">
+              <table id="tabelaEvidencias">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Arquivo</th>
+                    <th>Download</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>evidencia.jpg</td>
+                    <td><a href="css/img/evidencia.jpg" download>Download</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+        
+          <div id="relatorio" class="conteudo-tab">
+            <p>Conteúdo de Relatório...</p>
+          </div>
+
+
+
+        </div>
+     
+        <button class="salvar" onclick="salvarCaso()">Salvar Caso</button>
+      </div>
+</div>
+  
+
+
+  <!-- Painel superior com busca e perfil -->
+  <div class="painel-flutuante">
+    <div class="painel-conteudo">
+      <div class="search-bloco">
+        <input type="text" placeholder="Buscar casos...">
+        <span class="icone-filtro">
+          <img src="css/img/filtro.png" alt ="Filtro" class="img-filtro">
+        </span>
+      </div>
+  
+      <div class="perfil-bloco">
+        <img src="css/img/foto.png" alt="Perfil" class="icone-perfil">
+        <div class="info">
+          <span class="nome">João Silva</span>
+          <span class="cargo">Administrador</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+      function mostrarAba(id) {
+    const abas = document.querySelectorAll(".conteudo-tab");
+    abas.forEach(aba => aba.style.display = "none");
+
+    const abaSelecionada = document.getElementById(id);
+    if (abaSelecionada) {
+      abaSelecionada.style.display = "block";
+    }
+  }
+
+  // Eventos dos botões
+  document.getElementById("btn-localizacao").addEventListener("click", function() {
+    mostrarAba("localizacao");
+  });
+
+  document.getElementById("btn-anexos").addEventListener("click", function() {
+    mostrarAba("anexos");
+  });
+
+  document.getElementById("btn-relatorio").addEventListener("click", function() {
+    mostrarAba("relatorio");
+  });
+
+  // Opcional: exibir aba padrão ao carregar a página
+  window.onload = function () {
+    mostrarAba("localizacao");
+  };
+      // === DROPDOWN PERSONALIZADO ===
+      window.toggleDropdown = function () {
+        document.getElementById("dropdown").classList.toggle("active");
+      };
+
+      window.onclick = function (e) {
+        if (!e.target.closest('.custom-dropdown')) {
+          document.getElementById("dropdown").classList.remove("active");
+        }
+      };
+
+      // === ADICIONAR EVIDÊNCIA (LOCAL) ===
+      const inputEvidencia = document.getElementById("inputEvidencia");
+      const listaEvidencias = document.getElementById("lista-evidencias");
+      const mensagemDiv = document.getElementById("mensagem");
+      const tabelaEvidenciasBody = document.querySelector("#tabelaEvidencias tbody");
+      const evidenciasLocal = []; // Array para armazenar as evidências localmente
+
+      inputEvidencia.addEventListener("change", function (event) {
+        const files = event.target.files;
+        if (files.length > 0) {
+          mensagemDiv.style.display = "none"; // Esconde mensagens anteriores
+
+          Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              // Adicionar informações do arquivo para exibição local
+              evidenciasLocal.push({ name: file.name, dataUrl: e.target.result });
+
+              // Atualizar a lista de evidências (dropdown)
+              const link = document.createElement("a");
+              link.textContent = file.name;
+              listaEvidencias?.appendChild(link);
+              listaEvidencias?.appendChild(document.createElement("br"));
+
+              // Atualizar a tabela de evidências
+              if (tabelaEvidenciasBody) {
+                const tr = document.createElement("tr");
+                const tdIndex = document.createElement("td");
+                tdIndex.textContent = tabelaEvidenciasBody.rows.length + 1;
+                const tdNome = document.createElement("td");
+                tdNome.textContent = file.name;
+                const tdLink = document.createElement("td");
+                const downloadLink = document.createElement("a");
+                downloadLink.href = e.target.result;
+                downloadLink.download = file.name;
+                downloadLink.textContent = "Download";
+                tdLink.appendChild(downloadLink);
+                tr.appendChild(tdIndex);
+                tr.appendChild(tdNome);
+                tr.appendChild(tdLink);
+                tabelaEvidenciasBody.appendChild(tr);
+              }
+            };
+            reader.readAsDataURL(file); // Ler o arquivo como Data URL
+
+            // Exibir mensagem de sucesso (local)
+            mensagemDiv.style.display = "block";
+            mensagemDiv.style.color = "green";
+            mensagemDiv.textContent = "Evidência adicionada localmente!";
+          });
+
+          // Resetar input
+          event.target.value = '';
+        }
+      });
+
+      // === SALVAR CASO (LOCAL - apenas simulação) ===
+      window.salvarCaso = function () {
+        alert("Caso salvo localmente" + evidenciasLocal.map(e => e.name).join(", "));
+      };
+
+      // === SALVAR DADOS DO CASO (LOCAL - simulação) ===
+      document.getElementById('btn-salvar-caso').addEventListener('click', () => {
+        const dados = {
+          titulo: document.getElementById('titulo').value,
+          codigo: document.getElementById('codigo').value,
+          perito: document.getElementById('perito').value,
+          status: document.getElementById('status').value,
+          dataOcorrencia: document.getElementById('data-ocorrencia').value,
+          dataEmissao: document.getElementById('data-emissao').value,
+          local: document.getElementById('local').value,
+          evidencias: evidenciasLocal.map(e => e.name) // Salvar apenas os nomes das evidências localmente
+        };
+        alert('Dados do caso salvos localmente:\n' + JSON.stringify(dados, null, 2));
+        console.log('Dados do caso salvos localmente:', dados);
+      });
+
+
+    //mapa
+// Inicializa o mapa centralizado em Recife
+const map = L.map('map').setView([-8.0476, -34.8770], 13);
+
+// Adiciona o mapa base do OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+}).addTo(map);
+
+let marker = null;
+
+// Clique no mapa para adicionar marcador e buscar endereço
+map.on('click', function (e) {
+  const { lat, lng } = e.latlng;
+
+  if (marker) {
+    marker.setLatLng([lat, lng]);
+  } else {
+    const customIcon = L.icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      shadowSize: [41, 41]
+    });
+
+    marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+  }
+
+  buscarEndereco(lat, lng);
+});
+
+// Função para buscar endereço usando Nominatim
+function buscarEndereco(lat, lng) {
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+    .then(response => response.json())
+    .then(data => {
+      const endereco = data.display_name || "Endereço não encontrado";
+      document.getElementById('endereco').textContent = endereco;
+    })
+    .catch(() => {
+      document.getElementById('endereco').textContent = "Erro ao buscar endereço";
+    });
+}
+
+// Exibe a aba de localização e corrige o tamanho do mapa
+document.getElementById('btn-localizacao').addEventListener('click', function () {
+  document.querySelectorAll('.conteudo-tab').forEach(tab => tab.style.display = 'none');
+  document.getElementById('localizacao').style.display = 'block';
+
+  // Aguarda a aba ficar visível para atualizar o mapa
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 300);
+});
+ 
+</script>
+  
+  
+  <!-- Script separado -->
+<script src="js/script.js"></script>
+
+</body>
+</html>
