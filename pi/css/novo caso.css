@@ -154,19 +154,18 @@ body {
   
   .retangulo-fundo {
     position: absolute;
-    top: 110px;                  /* Ajuste para deixar espaço pro painel */
-    left: 188px;                   /* Mesmo left do painel-flutuante */
+    top: 120px;
+    left: 188px;
     width: 938px;
-    min-height: 71vh;           /* Altura mínima de 71% da tela */
+    min-height: 71vh;
     background-color: #D4C9BE;
     border-radius: 10px;
     border: 1px solid #123458;
     z-index: 0;
-    padding: 20px;              /* Espaço interno opcional */
+    padding: 20px;
     box-sizing: border-box;
     display: flex;
     gap: 40px;
-    padding: 20px;
     align-items: flex-start;
   }
   
