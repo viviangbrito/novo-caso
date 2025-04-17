@@ -94,7 +94,7 @@ body {
   /* Estilo do ícone de filtro (agora uma imagem) */
   .icone-filtro {
     position: absolute;
-    right: 10px; /* Posiciona a imagem à direita dentro do input */
+    right: 30px; /* Posiciona a imagem à direita dentro do input */
     top: 50%;
     transform: translateY(-50%);
   }
