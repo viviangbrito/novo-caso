@@ -10,7 +10,7 @@ body {
     left:15px; /* 2cm da borda esquerda */
     transform: translateY(-50%);
     background-color: #D4C9BE;
-    padding: 15px;
+    padding: 5px;
     border-radius: 10px;
     border: 1px solid #123458;
     display: flex;
@@ -32,7 +32,7 @@ body {
     color: #123458;
     text-decoration: none;
     border-radius: 10px;
-    width: 50%;
+    width: 40%;
     text-align: center;
   }
   
@@ -41,8 +41,8 @@ body {
   }
   
   .menu-lateral img.icone {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
   
   .painel-flutuante {
